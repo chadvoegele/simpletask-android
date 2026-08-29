@@ -43,7 +43,7 @@ abstract class ThemedActionBarActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        applySystemBarInsets(findViewById(android.R.id.content), null, applyTopToRoot = false)
+        applySystemBarInsets(findViewById(android.R.id.content), null, applyTopToRoot = true)
     }
 }
 
@@ -61,7 +61,7 @@ abstract class ThemedPreferenceActivity : AppCompatPreferenceActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        applySystemBarInsets(findViewById(android.R.id.content), null, applyTopToRoot = false)
+        applySystemBarInsets(findViewById(android.R.id.content), null, applyTopToRoot = true)
     }
 }
 
