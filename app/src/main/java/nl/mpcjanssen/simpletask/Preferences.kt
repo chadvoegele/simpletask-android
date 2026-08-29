@@ -70,7 +70,7 @@ class Preferences : ThemedPreferenceActivity(), SharedPreferences.OnSharedPrefer
         localBroadcastManager.registerReceiver(m_broadcastReceiver, intentFilter)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
             getString(R.string.calendar_sync_thresholds),
             getString(R.string.calendar_sync_dues) -> requestCalendarPermission()
@@ -89,6 +89,7 @@ class Preferences : ThemedPreferenceActivity(), SharedPreferences.OnSharedPrefer
                 val broadcastIntent = Intent(Constants.BROADCAST_MAIN_FONTSIZE_CHANGED)
                 localBroadcastManager.sendBroadcast(broadcastIntent)
             }
+            null -> Unit
         }
     }
 

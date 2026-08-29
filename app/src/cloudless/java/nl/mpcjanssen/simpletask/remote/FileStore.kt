@@ -42,11 +42,13 @@ object FileStore : IFileStore {
             } else {
                 true
             }
-            return (
-                    ContextCompat.checkSelfPermission(TodoApplication.app,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                            PackageManager.PERMISSION_GRANTED)
-                    && externManager
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                externManager
+            } else {
+                ContextCompat.checkSelfPermission(TodoApplication.app,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                        PackageManager.PERMISSION_GRANTED
+            }
         }
 
     override fun loadTasksFromFile(file: File): List<String> {
@@ -166,7 +168,7 @@ object FileStore : IFileStore {
                 if (sel.isDirectory) {
                     result.add(FileEntry(File(filename), true))
                 } else {
-                    !txtOnly || filename.toLowerCase(Locale.getDefault()).endsWith(".txt")
+                    !txtOnly || filename.lowercase(Locale.getDefault()).endsWith(".txt")
                     result.add(FileEntry(File(filename), false))
                 }
             }

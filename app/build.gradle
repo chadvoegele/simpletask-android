@@ -7,8 +7,7 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'com.android.legacy-kapt'
 
 if (!project.hasProperty("storeP12File")) {
     ext.storeP12File = file("/")
@@ -20,11 +19,13 @@ if (!project.hasProperty("storeServiceAccount")) {
 
 
 android {
-    compileSdkVersion 31
+    namespace "nl.mpcjanssen.simpletask"
+    compileSdkVersion 37
     flavorDimensions "main"
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
     packagingOptions {
         resources {
@@ -41,7 +42,7 @@ android {
         buildConfigField "String", "GIT_VERSION", "\"" + androidGitVersion.name() + "\""
         multiDexEnabled false
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 37
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         kapt {
             arguments {
@@ -120,10 +121,11 @@ android {
 //}
 
 repositories {
-    jcenter()
-    maven { url "https://jitpack.io" }
-    maven { url "https://maven.google.com" }
     google()
+    mavenCentral()
+    maven { url "https://artifactory.appodeal.com/appodeal-public" }
+    maven { url "https://repo.grails.org/grails/restricted" }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {

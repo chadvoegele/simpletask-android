@@ -1,9 +1,8 @@
 buildscript {
-    ext.kotlin_version = '1.4.32'
+    ext.kotlin_version = '2.2.10'
     repositories {
         google()
         mavenCentral()
-        jcenter()
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
@@ -12,8 +11,11 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:9.3.2'
     }
+}
+
+plugins {
+    id 'com.android.legacy-kapt' version '9.3.2' apply false
 }
 

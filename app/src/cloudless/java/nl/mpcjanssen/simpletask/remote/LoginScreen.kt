@@ -57,6 +57,13 @@ class LoginScreen : ThemedNoActionBarActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (::binding.isInitialized && FileStore.isAuthenticated) {
+            finishLogin()
+        }
+    }
+
     private fun switchToTodolist() {
         val intent = Intent(this, Simpletask::class.java)
         startActivity(intent)
@@ -85,8 +92,12 @@ class LoginScreen : ThemedNoActionBarActivity() {
     }
 
     internal fun startLogin() {
-        ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_WRITE_PERMISSION)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            continueLogin()
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_WRITE_PERMISSION)
+        }
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
