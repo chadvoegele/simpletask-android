@@ -1,5 +1,6 @@
 package nl.mpcjanssen.simpletask.util
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Environment
 import android.util.Log
@@ -96,6 +97,7 @@ class Config(app: TodoApplication) : Preferences(app) {
         get() {
             return when (activeThemeString) {
                 "dark" -> R.style.AppTheme_NoActionBar
+                "system" -> R.style.AppTheme_DayNight_NoActionBar
                 "black" -> R.style.AppTheme_Black_NoActionBar
                 else -> R.style.AppTheme_Light_NoActionBar
             }
@@ -105,6 +107,7 @@ class Config(app: TodoApplication) : Preferences(app) {
         get() {
             return when (activeThemeString) {
                 "dark" -> R.style.AppTheme_ActionBar
+                "system" -> R.style.AppTheme_DayNight_DarkActionBar
                 "black" -> R.style.AppTheme_Black_ActionBar
                 else -> R.style.AppTheme_Light_DarkActionBar
             }
@@ -123,6 +126,7 @@ class Config(app: TodoApplication) : Preferences(app) {
         get() {
             return when (activeThemeString) {
                 "dark" -> true
+                "system" -> (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
                 else -> false
             }
         }
