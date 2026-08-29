@@ -45,12 +45,7 @@ abstract class ThemedActionBarActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        applySystemBarInsets(
-                findViewById(android.R.id.content),
-                null,
-                applyTopToRoot = true,
-                actionBarHeight = actionBarHeight(this)
-        )
+        applySystemBarInsets(findViewById(android.R.id.content), null, applyTopToRoot = false)
     }
 }
 
