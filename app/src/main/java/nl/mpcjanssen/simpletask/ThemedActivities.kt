@@ -1,5 +1,7 @@
 package nl.mpcjanssen.simpletask
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -61,25 +63,47 @@ abstract class ThemedPreferenceActivity : AppCompatPreferenceActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        applySystemBarInsets(findViewById(android.R.id.content), null, applyTopToRoot = false)
+        applySystemBarInsets(
+                findViewById(android.R.id.content),
+                null,
+                applyTopToRoot = true,
+                actionBarHeight = actionBarHeight(this)
+        )
     }
 }
 
-private fun applySystemBarInsets(root: ViewGroup, topBar: View?, applyTopToRoot: Boolean) {
+private fun actionBarHeight(context: Context): Int {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+        return 0
+    }
+    val attributes = context.obtainStyledAttributes(intArrayOf(androidx.appcompat.R.attr.actionBarSize))
+    val height = attributes.getDimensionPixelSize(0, 0)
+    attributes.recycle()
+    return height
+}
+
+private fun applySystemBarInsets(
+        root: ViewGroup,
+        topBar: View?,
+        applyTopToRoot: Boolean,
+        actionBarHeight: Int = 0
+) {
     val rootPaddingTop = root.paddingTop
     val rootPaddingBottom = root.paddingBottom
     val topBarPaddingTop = topBar?.paddingTop ?: 0
 
     ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
-        val statusBarInset = if (applyTopToRoot) {
-            insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+        val topInset = if (applyTopToRoot) {
+            val systemTopInset = insets.getSystemWindowInsets().top
+            val statusBarInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+            maxOf(systemTopInset, statusBarInset + actionBarHeight)
         } else {
             0
         }
         val navigationBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
         view.setPadding(
                 view.paddingLeft,
-                rootPaddingTop + statusBarInset,
+                rootPaddingTop + topInset,
                 view.paddingRight,
                 rootPaddingBottom + navigationBarInset
         )
