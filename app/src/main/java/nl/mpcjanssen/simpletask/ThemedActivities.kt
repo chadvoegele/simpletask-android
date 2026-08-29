@@ -71,15 +71,16 @@ private fun applySystemBarInsets(root: ViewGroup, topBar: View?, applyTopToRoot:
     val topBarPaddingTop = topBar?.paddingTop ?: 0
 
     ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
-        val statusBarInset = if (applyTopToRoot) {
-            insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+        val topInset = if (applyTopToRoot) {
+            // AppCompat includes the action bar in the root's legacy system inset.
+            insets.getSystemWindowInsets().top
         } else {
             0
         }
         val navigationBarInset = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
         view.setPadding(
                 view.paddingLeft,
-                rootPaddingTop + statusBarInset,
+                rootPaddingTop + topInset,
                 view.paddingRight,
                 rootPaddingBottom + navigationBarInset
         )
