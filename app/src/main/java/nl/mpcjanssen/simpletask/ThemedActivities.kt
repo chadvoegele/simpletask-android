@@ -33,6 +33,8 @@ abstract class ThemedNoActionBarActivity : AppCompatActivity() {
 
 abstract class ThemedActionBarActivity : AppCompatActivity() {
 
+    protected open val includeActionBarInContentInset = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(TodoApplication.config.activeActionBarTheme)
         if (TodoApplication.config.forceEnglish) {
@@ -45,7 +47,12 @@ abstract class ThemedActionBarActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        applySystemBarInsets(findViewById(android.R.id.content), null, applyTopToRoot = false)
+        applySystemBarInsets(
+                findViewById(android.R.id.content),
+                null,
+                applyTopToRoot = includeActionBarInContentInset,
+                actionBarHeight = if (includeActionBarInContentInset) actionBarHeight(this) else 0
+        )
     }
 }
 
