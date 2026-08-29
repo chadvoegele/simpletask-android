@@ -41,7 +41,6 @@ import android.appwidget.AppWidgetManager
 import android.content.*
 import android.os.Build
 import android.os.SystemClock
-import androidx.multidex.MultiDexApplication
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.util.Log
 import androidx.room.Room
