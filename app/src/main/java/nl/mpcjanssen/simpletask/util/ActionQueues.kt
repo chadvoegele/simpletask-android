@@ -1,9 +1,6 @@
 package nl.mpcjanssen.simpletask.util
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import org.jetbrains.anko.doAsync
 
 
 open class ActionQueue(val qName: String) : Thread() {
@@ -11,7 +8,7 @@ open class ActionQueue(val qName: String) : Thread() {
 
     fun add(description: String, r: () -> Unit) {
         Log.i(qName, "-> $description")
-        doAsync {
+        executeAsync {
             Log.i(qName, "<- $description")
             r.invoke()
         }
