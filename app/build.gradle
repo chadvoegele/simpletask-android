@@ -123,17 +123,14 @@ android {
 repositories {
     google()
     mavenCentral()
-    maven { url "https://artifactory.appodeal.com/appodeal-public" }
     maven { url "https://repo.grails.org/grails/restricted" }
     maven { url "https://jitpack.io" }
 }
 
 dependencies {
     dropboxImplementation 'com.dropbox.core:dropbox-core-sdk:5.2.0'
-    implementation 'org.jetbrains.anko:anko-commons:0.10.8'
     nextcloudImplementation 'com.github.nextcloud:android-library:1.6.1'
     nextcloudImplementation 'com.google.code.gson:gson:2.9.0'
-    implementation "org.jetbrains.anko:anko-commons:0.10.8"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation 'androidx.core:core:1.7.0'
